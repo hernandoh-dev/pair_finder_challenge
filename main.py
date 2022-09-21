@@ -13,7 +13,7 @@ def main(arguments: argparse.Namespace):
 
     numbers = list(sorted(map(lambda x: int(x), arguments.numbers)))
     numbers_size = len(numbers)
-    if 10000 >= numbers_size > sys.getrecursionlimit():
+    if 10000 >= numbers_size > sys.getrecursionlimit() or arguments.unlimit:
         sys.setrecursionlimit(len(numbers) + 1)
 
     init = datetime.datetime.now()
@@ -79,6 +79,7 @@ if __name__ == "__main__":
         "--unlimit",
         type=bool,
         help="Defines if process a list larger than 10.000 items.",
+        default=False
     )
 
     args = parser.parse_args()
