@@ -18,4 +18,4 @@ run ```python main.py --help``` for more info.
 
 ```python main.py --target 12 --numbers 1 9 5 0 20 -4 12 16 7```
 
-This exetution should be return ```{(5, 7), (0, 12), (-4, 16)}```
+This exetution should be return ```[[5, 7], [0, 12], [-4, 16]]```
