@@ -1,9 +1,6 @@
-import os
 import sys
 import argparse
 import datetime
-from typing import Set, Tuple
-
 
 def main(arguments: argparse.Namespace):
     """
@@ -11,7 +8,7 @@ def main(arguments: argparse.Namespace):
     :param arguments: Script parameters.
     """
 
-    numbers = list(sorted(map(lambda x: int(x), arguments.numbers)))
+    numbers = arguments.numbers
     numbers_size = len(numbers)
     if 10000 >= numbers_size > sys.getrecursionlimit() or arguments.unlimit:
         sys.setrecursionlimit(len(numbers) + 1)
@@ -19,7 +16,7 @@ def main(arguments: argparse.Namespace):
     init = datetime.datetime.now()
     message = "at least 2 values are required to carry out the process"
     if numbers_size > 1:
-        pairs = set()
+        pairs = list()
         find_pairs(numbers, pairs, arguments.target)
         print(pairs)
         message = f"\nTook {datetime.datetime.now() - init} for {numbers_size} numbers."
@@ -27,7 +24,7 @@ def main(arguments: argparse.Namespace):
     print(message)
 
 
-def find_pairs(numbers: list, pairs: Set[Tuple[int, int]], target: int):
+def find_pairs(numbers: list, pairs: list, target: int):
     """
     Given an unsorted array, find recursively all pairs with the given sum in it.
     (Own version)
@@ -38,13 +35,13 @@ def find_pairs(numbers: list, pairs: Set[Tuple[int, int]], target: int):
     """
     if not numbers:
         return pairs
-    current: int = numbers.pop(0)
-    pair_list: list = list(filter(lambda x: target - current == x, numbers))
+    current: int = int(numbers.pop(0))
+    pair_list: list = list(filter(lambda x: target - current == int(x), numbers))
     if pair_list:
         pair: int = pair_list.pop(0)
         numbers.remove(pair)
-        result: tuple = tuple(sorted([current, pair]))
-        pairs.add(result)
+        result: list = [current, int(pair)]
+        pairs.append(result)
 
     return find_pairs(numbers, pairs, target)
 
